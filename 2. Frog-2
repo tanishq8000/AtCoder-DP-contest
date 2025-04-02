@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long int
+
+int helper(int idx,int n,int k,vector<int> &arr,vector<int> &dp){
+    if(idx >= n-1){
+        return 0;
+    }
+    
+    if(dp[idx] != -1){
+        return dp[idx];
+    }
+    
+    int minCost = INT_MAX;
+    
+    for(int i=1;i<=k;i++){
+        int curr = INT_MAX;
+        if(idx < n-i){
+            curr = abs(arr[idx+i]-arr[idx]) + helper(idx+i,n,k,arr,dp);
+            minCost = min(minCost,curr);
+        }
+    }
+    
+    return dp[idx] = minCost;
+}
+
+int32_t main() {
+    int n,k;
+    cin>>n>>k;
+    
+    vector<int> arr(n);
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    
+    vector<int> dp(n,-1);
+    
+    cout<<helper(0,n,k,arr,dp);
+    
+    return 0;
+}
